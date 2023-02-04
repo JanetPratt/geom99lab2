@@ -1,0 +1,107 @@
+
+<html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+      <title>The Geography of a Love Story</title>
+      <style>
+        html, body, #viewDiv {
+          padding: 0;
+          margin: 0;
+          height: 100%;
+          width: 100%;
+        }
+      </style>
+      <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+      <script src="https://js.arcgis.com/4.25/"></script>
+      <script>
+    
+      require([
+        "esri/config",
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/Graphic",
+        "esri/layers/GraphicsLayer",
+
+    
+        ], function(esriConfig,Map, MapView, Graphic, GraphicsLayer) {
+    
+      esriConfig.apiKey = "YOUR_API_KEY";
+    
+      const map = new Map({
+        basemap: "arcgis-imagery" //Basemap layer service
+      });
+    
+      const view = new MapView({
+        map: map,
+        center: [-79.901,47.82600], //Longitude, latitude
+        zoom: 16,
+        container: "viewDiv"
+     });
+     
+     const graphicsLayer = new GraphicsLayer();
+     map.add(graphicsLayer);
+
+    
+     // Create a polygon geometry
+     const polygon = {
+        type: "polygon",
+        rings: [
+        [-79.90161281205933, 47.826918368257736],
+[-79.90172572809112, 47.82712413436272],
+[-79.90206447618452, 47.82724326173485],
+[-79.90246774772498, 47.82720535760063],
+[-79.90271777607967, 47.826977932214135],
+[-79.9026532526333, 47.82656098308351],
+[-79.90221771936969, 47.8262198403944],
+[-79.90181444782988, 47.82585703539226],
+[-79.90159668119772, 47.82567833945862],
+[-79.9011046899192, 47.82601948570672],
+[-79.9007901381175, 47.82630106504746],
+[-79.90043525916248, 47.826755920756085],
+[-79.90053204433202, 47.827129549249236],
+[-79.90086272699469, 47.8272161873561],
+[-79.9012418022427, 47.82718369808299],
+[-79.90162894292091, 47.82692378316568]
+
+        ]
+     };
+    
+     const simpleFillSymbol = {
+    type: "simple-fill",
+    color: [255, 105, 180, 0.8],  // Pink, opacity 80%
+    outline: {
+        color: [255, 0, 0],
+        width: 1
+    }
+
+  };
+    
+     const popupTemplate = {
+        title: "{Name}",
+        content: "{Description}"
+     }
+     const attributes = {
+        Name: "Home Sweet Home",
+        Description: "Where our dreams come true every day"
+     }
+    
+     const polygonGraphic = new Graphic({
+        geometry: polygon,
+        symbol: simpleFillSymbol,
+    
+        attributes: attributes,
+        popupTemplate: popupTemplate
+    
+     });
+     graphicsLayer.add(polygonGraphic);
+    
+     });
+     
+    </script>
+    </head>
+    <body>
+      <div id="viewDiv"></div>
+    </body>
+    </html>
